@@ -36,6 +36,7 @@ namespace PropertyManagement.Infrastructure.Persistence
                 .WithOne(b => b.Property)
                 .HasForeignKey(b => b.PropertyId)
                 .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

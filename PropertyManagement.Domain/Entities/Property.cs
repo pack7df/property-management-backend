@@ -25,6 +25,8 @@ namespace PropertyManagement.Domain.Entities
         public virtual Host Host { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
+        public virtual ICollection<DomainEvent> Events { get; set; } = new List<DomainEvent>();
+
         public Property() { }
 
     }

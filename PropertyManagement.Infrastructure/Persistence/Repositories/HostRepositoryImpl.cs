@@ -28,7 +28,7 @@ namespace PropertyManagement.Infrastructure.Persistence.Repositories
                 Phone = parameters.Phone,
                 Id = Guid.NewGuid()
             };
-            await dbContext.Hosts.AddAsync(newHost);
+            dbContext.Hosts.Add(newHost);
             return newHost;
         }
 

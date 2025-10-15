@@ -16,6 +16,8 @@ namespace PropertyManagement.Domain.Abstractions
         public Task<bool> DeleteAsync(Guid id);
         public Task<Property?> UpdateAsync(Property data);
 
-        public Task<Booking?> BookingAsync(Booking data);
+        public Task<Booking?> BookingAsync(BookingRequest data);
+
+        public Task<DomainEvent?> SyncronizeAsync(Guid id);
     }
 }

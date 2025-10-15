@@ -33,8 +33,47 @@ namespace PropertyManagement.Infrastructure.Persistence.Repositories
                 PricePerNight = parameters.PricePerNight,
                 Status = parameters.Status
             };
-            await dbContext.Properties.AddAsync(newProperty);
+            dbContext.Properties.Add(newProperty);
             return newProperty;
+        }
+
+        public async Task<Booking?> AddAsync(Booking booking)
+        {
+            var property = await FetchAsync(booking.PropertyId);
+            if (property == null) return null;
+            var newBooking = new Booking
+            {
+                CheckIn = booking.CheckIn,
+                CheckOut = booking.CheckOut,
+                Property = property,
+                PropertyId = property.Id,
+                TotalPrice = booking.TotalPrice,
+                Id = Guid.NewGuid()
+            };
+            dbContext.Bookings.Add(newBooking);
+            return newBooking;
+        }
+
+        public async Task<DomainEvent?> AddAsync(DomainEvent @event)
+        {
+            var property = await FetchAsync(@event.PropertyId);
+            if (property == null) return null;
+            var newEvent = new DomainEvent
+            {
+                CreatedAt = @event.CreatedAt,
+                EventType = @event.EventType,
+                Id = Guid.NewGuid(),
+                PayloadJSON = @event.PayloadJSON,
+                PropertyId = @event.PropertyId,
+                Property = @event.Property
+            };
+            dbContext.Events.Add(newEvent);
+            return newEvent;
+        }
+
+        public async Task<Property?> FetchAsync(Guid id)
+        {
+            return await dbContext.Properties.FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<PaginationResult<Property>> FilterAsync(FilterPropertyRequest parameters)

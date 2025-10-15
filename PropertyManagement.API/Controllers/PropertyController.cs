@@ -47,6 +47,20 @@ namespace PropertyManagement.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("sync")]
+        public async Task<ActionResult<bool>> SyncAsync([FromQuery] Guid id)
+        {
+            var result = await propertyServices.SyncronizeAsync(id);
+            return Ok(result);
+        }
+
+        [HttpPost("booking")]
+        public async Task<ActionResult<bool>> BookingAsync([FromBody] BookingRequest parameters)
+        {
+            var result = await propertyServices.BookingAsync(parameters);
+            return Ok(result);
+        }
+
         [HttpDelete("delete")]
         public async Task<ActionResult<bool>> DeleteAsync([FromQuery] Guid id)
         {

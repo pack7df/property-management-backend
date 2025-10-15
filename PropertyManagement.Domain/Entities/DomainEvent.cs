@@ -8,15 +8,15 @@ namespace PropertyManagement.Domain.Entities
 {
     public class DomainEvent
     {
-        public Guid Id { get; private set; }
-        public Guid PropertyId { get; private set; }
-        public string EventType { get; private set; } = string.Empty;
-        public DateTime CreatedAt { get; private set; }
-        public string PayloadJSON { get; private set; } = "{}";
+        public Guid Id { get; set; }
+        public Guid PropertyId { get; set; }
+        public string EventType { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; }
+        public string PayloadJSON { get;  set; } = "{}";
 
-        public Property? Property { get; private set; }
+        public virtual Property Property { get; set; }
 
-        protected DomainEvent() { }
+        public DomainEvent() { }
 
     }
 }

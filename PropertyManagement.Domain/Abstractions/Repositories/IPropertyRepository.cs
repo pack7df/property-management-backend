@@ -10,6 +10,9 @@ namespace PropertyManagement.Domain.Abstractions.Repositories
 {
     public interface IPropertyRepository
     {
+        public Task<Booking?> AddAsync(Booking booking);
+        public Task<DomainEvent?> AddAsync(DomainEvent @event);
+        public Task<Property?> FetchAsync(Guid id);
         public Task<Property?> AddAsync(Property parameters);
         public Task<bool> RemoveAsync(Guid id);
 

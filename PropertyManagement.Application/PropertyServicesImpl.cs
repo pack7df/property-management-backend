@@ -9,15 +9,28 @@ namespace PropertyManagement.Application
     public class PropertyServicesImpl : IPropertyServices
     {
         private IPropertyRepository propertyRepository;
+        private IOTAManager otaManager;
 
-        public PropertyServicesImpl(IPropertyRepository propertyRepository)
+        public PropertyServicesImpl(IPropertyRepository propertyRepository, IOTAManager otaManager)
         {
             this.propertyRepository = propertyRepository;
+            this.otaManager = otaManager;
         }
 
-        public async Task<Booking?> BookingAsync(Booking data)
+        public async Task<Booking?> BookingAsync(BookingRequest data)  
         {
-            throw new NotImplementedException();
+            var property = await propertyRepository.FetchAsync(data.PropertyId);
+            if (property == null) return null;
+            var totalPrice = property.PricePerNight * (decimal)((data.CheckOut - data.CheckIn).TotalDays);
+            var newBooking = new Booking
+            {
+                CheckIn = data.CheckIn,
+                CheckOut = data.CheckOut,
+                Property = property,
+                PropertyId = property.Id,
+                TotalPrice = totalPrice,
+            };
+            return await propertyRepository.AddAsync(newBooking);
         }
 
         public async Task<Property?> CreateAsync(Property data)
@@ -35,6 +48,13 @@ namespace PropertyManagement.Application
         public async Task<PaginationResult<Property>> FilterAsync(FilterPropertyRequest parameters)
         {
             return await propertyRepository.FilterAsync(parameters);
+        }
+
+        public async Task<DomainEvent?> SyncronizeAsync(Guid id)
+        {
+            var propertyEvent = await otaManager.SyncronizeAsync(id);
+            if (propertyEvent == null) return null;
+            return await propertyRepository.AddAsync(propertyEvent);
         }
 
         public async Task<Property?> UpdateAsync(Property data)

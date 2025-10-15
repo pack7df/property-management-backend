@@ -3,20 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PropertyManagement.Domain.Entities;
 
-namespace PropertyManagement.Domain.Entities
+namespace PropertyManagement.Domain.DTO
 {
-    public class Booking
+    public class BookingRequest
     {
-        public Guid Id { get; set; }
         public Guid PropertyId { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
-        public decimal TotalPrice { get; set; }
-
-        public virtual Property Property { get; set; }
-
-        public Booking() { }
 
     }
 }
