@@ -22,6 +22,12 @@ namespace PropertyManagement.API.Controllers
         public async Task<ActionResult<PaginationResult<Domain.Entities.Host>>> FilterAsync([FromQuery] FilterHostRequest request)
         {
             var result = await hostServices.FilterAsync(request);
+            result.Items = result.Items.Select(i => new Domain.Entities.Host
+            {
+                Email = i.Email,
+                FullName = i.FullName,
+                Phone = i.Phone
+            }).ToList();
             return Ok(result);
         }
 

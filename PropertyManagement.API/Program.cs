@@ -1,13 +1,21 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
+using PropertyManagement.Application;
+using PropertyManagement.Domain.Abstractions;
+using PropertyManagement.Domain.Abstractions.Repositories;
 using PropertyManagement.Infrastructure.Persistence;
+using PropertyManagement.Infrastructure.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<CustomDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")
-    )
+)
 );
+
+builder.Services.AddScoped<IHostServices, HostServicesImpl>();
+builder.Services.AddScoped<IHostRepository, HostRepositoryImpl>();
 
 
 // Add services to the container.
@@ -23,6 +31,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+
 
 app.UseHttpsRedirection();
 
