@@ -42,7 +42,7 @@ namespace PropertyManagement.Infrastructure.Persistence.Repositories
                                         && h.FullName.ToLower().Contains(fullName)
                                         && h.Phone.ToLower().Contains(phone);
 
-            pageParameters.Order = parameters.Order;
+            pageParameters.Order = parameters.Order ?? SortOrder.Ascending;
             pageParameters.PageIndex = parameters.PageIndex;
             pageParameters.PageSize = parameters.PageSize;
             if (parameters.OrderBy.ToLower() == "email")

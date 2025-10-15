@@ -38,6 +38,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseMiddleware<EFMiddleware>();
+
 app.MapControllers();
 
 app.Run();

@@ -15,10 +15,10 @@ namespace PropertyManagement.Infrastructure.Persistence
         {
             var filterQ = (parameters.filter == null) ? query : query.Where(parameters.filter);
             if (parameters.OrderBy == null) return await filterQ.GetPagedQueryAsync(parameters as PaginationParams);
-            var orderByQ = parameters.Order == SortOrder.Ascending ? query.OrderBy(parameters.OrderBy) : query.OrderByDescending(parameters.OrderBy);
+            var orderByQ = parameters.Order == SortOrder.Ascending ? filterQ.OrderBy(parameters.OrderBy) : filterQ.OrderByDescending(parameters.OrderBy);
             return new PaginationResult<T>
             {
-                Total = query.Count(),
+                Total = orderByQ.Count(),
                 Items = await orderByQ.Skip(parameters.PageIndex * parameters.PageSize).Take(parameters.PageSize).ToListAsync(token),
             };
         }

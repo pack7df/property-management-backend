@@ -7,8 +7,11 @@ using PropertyManagement.Domain.Abstractions.Repositories;
 
 namespace PropertyManagement.Domain.DTO
 {
-    public class BaseFilterRequest : PaginationParams
+    public class BaseFilterRequest 
     {
-        public string OrderBy { get; set; }
+        public SortOrder? Order { get; set; } = SortOrder.Ascending;
+        public int PageIndex { get; set; } = 0;
+        public int PageSize { get; set; } = 20;
+        public string OrderBy { get; set; } = "";
     }
 }
