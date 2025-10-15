@@ -44,7 +44,7 @@ namespace PropertyManagement.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("PropertyManagement.Domain.Entities.DomainEvent", b =>
@@ -71,7 +71,7 @@ namespace PropertyManagement.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("PropertyManagement.Domain.Entities.Host", b =>
@@ -94,7 +94,7 @@ namespace PropertyManagement.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Hosts");
+                    b.ToTable("Hosts", (string)null);
                 });
 
             modelBuilder.Entity("PropertyManagement.Domain.Entities.Property", b =>
@@ -127,7 +127,7 @@ namespace PropertyManagement.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("HostId");
 
-                    b.ToTable("Properties");
+                    b.ToTable("Properties", (string)null);
                 });
 
             modelBuilder.Entity("PropertyManagement.Domain.Entities.User", b =>
@@ -146,7 +146,7 @@ namespace PropertyManagement.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("PropertyManagement.Domain.Entities.Booking", b =>

@@ -24,6 +24,18 @@ namespace PropertyManagement.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Host>()
+                .HasMany(h => h.Properties)
+                .WithOne(p => p.Host)
+                .HasForeignKey(p => p.HostId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Property>()
+                .HasMany(p => p.Bookings)
+                .WithOne(b => b.Property)
+                .HasForeignKey(b => b.PropertyId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace PropertyManagement.Domain.Entities
         public DateTime CreatedAt { get; private set; }
 
         public Host? Host { get; private set; }
-        public ICollection<Booking> Bookings { get; private set; } = new List<Booking>();
+        public virtual ICollection<Booking> Bookings { get; private set; } = new List<Booking>();
 
         protected Property() { }
 
