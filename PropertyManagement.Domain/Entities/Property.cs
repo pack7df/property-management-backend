@@ -14,18 +14,18 @@ namespace PropertyManagement.Domain.Entities
 
     public class Property
     {
-        public Guid Id { get; private set; }
-        public Guid HostId { get; private set; }
-        public string Name { get; private set; } = string.Empty;
-        public string Location { get; private set; } = string.Empty;
-        public decimal PricePerNight { get; private set; }
-        public PropertyStatus Status { get; private set; }
-        public DateTime CreatedAt { get; private set; }
+        public Guid Id { get; set; }
+        public Guid HostId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+        public decimal PricePerNight { get; set; }
+        public PropertyStatus Status { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public Host? Host { get; private set; }
-        public virtual ICollection<Booking> Bookings { get; private set; } = new List<Booking>();
+        public virtual Host Host { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
-        protected Property() { }
+        public Property() { }
 
     }
 

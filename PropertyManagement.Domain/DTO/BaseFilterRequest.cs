@@ -9,7 +9,7 @@ namespace PropertyManagement.Domain.DTO
 {
     public class BaseFilterRequest 
     {
-        public SortOrder? Order { get; set; } = SortOrder.Ascending;
+        public SortOrder Order { get; set; } = SortOrder.Ascending;
         public int PageIndex { get; set; } = 0;
         public int PageSize { get; set; } = 20;
         public string OrderBy { get; set; } = "";

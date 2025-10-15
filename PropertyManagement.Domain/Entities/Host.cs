@@ -12,7 +12,7 @@ namespace PropertyManagement.Domain.Entities
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
 
-        public virtual ICollection<Property> Properties { get; private set; } = new List<Property>();
+        public virtual ICollection<Property> Properties { get;  set; } = new List<Property>();
 
         public Host() { }
 

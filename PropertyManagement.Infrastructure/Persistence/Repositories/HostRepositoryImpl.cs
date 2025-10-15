@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PropertyManagement.Domain;
 using PropertyManagement.Domain.Abstractions.Repositories;
 using PropertyManagement.Domain.DTO;
 using PropertyManagement.Domain.Entities;
@@ -33,25 +34,38 @@ namespace PropertyManagement.Infrastructure.Persistence.Repositories
 
         public async Task<PaginationResult<Host>> FilterAsync(FilterHostRequest parameters)
         {
-            var pageParameters = new PaginationParams<Host, string>();
+            var allQ = dbContext.Hosts;
+            
             var email = parameters.Email?.ToLower() ?? "";
             var fullName = parameters.FullName?.ToLower() ?? "";
             var phone = parameters.Phone?.ToLower() ?? "";
-            //TODO: optimized later
-            pageParameters.filter = (h) => h.Email.ToLower().Contains(email)
-                                        && h.FullName.ToLower().Contains(fullName)
-                                        && h.Phone.ToLower().Contains(phone);
+            var q = string.IsNullOrEmpty(email) ? allQ : allQ.Where(h => h.Email.ToLower().Contains(email));
+            q = string.IsNullOrEmpty(fullName) ? q: q.Where(h => h.FullName.ToLower().Contains(fullName));
+            q = string.IsNullOrEmpty(phone) ? q : q.Where(h => h.Phone.ToLower().Contains(phone));
 
-            pageParameters.Order = parameters.Order ?? SortOrder.Ascending;
+            var pageParameters = new PaginationParams();
+            pageParameters.Order = parameters.Order;
             pageParameters.PageIndex = parameters.PageIndex;
             pageParameters.PageSize = parameters.PageSize;
-            if (parameters.OrderBy.ToLower() == "email")
-                pageParameters.OrderBy = (h => h.Email);
-            if (parameters.OrderBy.ToLower() == "fullname")
-                pageParameters.OrderBy = (h => h.FullName);
-            if (parameters.OrderBy.ToLower() == "phone")
-                pageParameters.OrderBy = (h => h.Phone);
-            return await dbContext.Hosts.GetPagedQueryAsync(pageParameters);
+            switch (parameters.OrderBy)
+            {
+                case nameof(Host.Email):
+                    {
+                        return await q.GetPagedQueryAsync(pageParameters, h => h.Email);
+                    }
+                case nameof(Host.FullName):
+                    {
+                        return await q.GetPagedQueryAsync(pageParameters, h => h.FullName);
+                    }
+                case nameof(Host.Phone):
+                    {
+                        return await q.GetPagedQueryAsync(pageParameters, h => h.Phone);
+                    }
+                default:
+                    {
+                        throw new OrderParameterNotRecognizedException(typeof(Host), parameters.OrderBy);
+                    }
+            }
         }
 
         public async Task<bool> RemoveAsync(Guid id)

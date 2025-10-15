@@ -8,15 +8,15 @@ namespace PropertyManagement.Domain.Entities
 {
     public class Booking
     {
-        public Guid Id { get; private set; }
-        public Guid PropertyId { get; private set; }
-        public DateTime CheckIn { get; private set; }
-        public DateTime CheckOut { get; private set; }
-        public decimal TotalPrice { get; private set; }
+        public Guid Id { get; set; }
+        public Guid PropertyId { get; set; }
+        public DateTime CheckIn { get; set; }
+        public DateTime CheckOut { get; set; }
+        public decimal TotalPrice { get; set; }
 
-        public Property? Property { get; private set; }
+        public Property? Property { get; set; }
 
-        protected Booking() { }
+        public Booking() { }
 
     }
 }
