@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace PropertyManagement.Infrastructure.Persistence
 {
+    /// <summary>
+    /// Middleware to save change only if there is no error. It ensure a transaction per request.
+    /// </summary>
     public class EFMiddleware
     {
         private readonly RequestDelegate _next;
