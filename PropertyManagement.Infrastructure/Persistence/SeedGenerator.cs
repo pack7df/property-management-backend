@@ -57,6 +57,7 @@ namespace PropertyManagement.Infrastructure.Persistence
                     Phone = $"1234{i}",
                 };
                 host = await hostServices.CreateAsync(host);
+                dbContext.SaveChanges();
                 for (var j = 0; j < 50; j++)
                 {
                     var property = new Property
@@ -68,8 +69,8 @@ namespace PropertyManagement.Infrastructure.Persistence
                     };
                     property = await propertyServices.CreateAsync(property);
                 }
+                dbContext.SaveChanges();
             }
-            dbContext.SaveChanges();
         }
     }
 }
