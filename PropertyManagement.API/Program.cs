@@ -55,7 +55,11 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    c=>
+    {
+        c.EnableAnnotations();
+    });
 
 
 // Add services to the container.
